@@ -1,111 +1,265 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Root variables ─────────────────────────────── */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
-
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  --blush:       #F8D7DA;
+  --blush-deep:  #F0B8BF;
+  --sage:        #A8B5A2;
+  --sage-deep:   #7A9472;
+  --butter:      #F8E7A1;
+  --taupe:       #B8A99A;
+  --dusty-blue:  #A7BFD7;
+  --silver:      #D9D9D9;
+  --off-white:   #FDFAF8;
+  --warm-white:  #FFF9F5;
+  --text-dark:   #3D2E2E;
+  --text-mid:    #6B5757;
+  --text-light:  #9A8A8A;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
+/* ─── Base ───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
   margin: 0;
+  font-family: 'Lato', system-ui, sans-serif;
+  background-color: var(--warm-white);
+  color: var(--text-dark);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
+/* ─── Watercolor paper background ───────────────── */
+.paper-texture {
+  background-color: var(--warm-white);
+  background-image:
+    radial-gradient(ellipse at 18% 22%, rgba(248,215,218,0.32) 0%, transparent 52%),
+    radial-gradient(ellipse at 82% 78%, rgba(167,191,215,0.22) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(168,181,162,0.10) 0%, transparent 70%);
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+/* ─── Cards ──────────────────────────────────────── */
+.card {
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.65);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(184,169,154,0.18);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
+.card:hover { box-shadow: 0 12px 40px rgba(184,169,154,0.28); }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
+/* ─── Primary button ─────────────────────────────── */
+.btn-primary {
   display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  background: linear-gradient(135deg, #F0B8BF 0%, #B8A99A 100%);
+  color: #fff;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 3rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(240,184,191,0.38);
+  text-decoration: none;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 26px rgba(240,184,191,0.50);
+}
+.btn-primary:active  { transform: translateY(0); }
+.btn-primary:disabled {
+  opacity: 0.52;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* ─── Secondary button ───────────────────────────── */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.75rem;
+  background: transparent;
+  color: var(--taupe);
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1.5px solid var(--taupe);
+  border-radius: 3rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+.btn-secondary:hover {
+  background: var(--taupe);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* ─── Sage variant ───────────────────────────────── */
+.btn-sage {
+  background: linear-gradient(135deg, #A8B5A2 0%, #7A9472 100%) !important;
+  box-shadow: 0 4px 16px rgba(168,181,162,0.38) !important;
+}
+.btn-sage:hover {
+  box-shadow: 0 8px 26px rgba(168,181,162,0.50) !important;
+}
+
+/* ─── Inputs ─────────────────────────────────────── */
+.input-wedding {
+  width: 100%;
+  padding: 0.875rem 1.25rem;
+  background: rgba(255,255,255,0.82);
+  border: 1.5px solid rgba(184,169,154,0.30);
+  border-radius: 0.75rem;
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  color: var(--text-dark);
+  transition: all 0.3s ease;
+  outline: none;
+}
+.input-wedding:focus {
+  border-color: var(--blush-deep);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(240,184,191,0.18);
+}
+.input-wedding::placeholder { color: var(--text-light); }
+
+/* ─── Progress bar ───────────────────────────────── */
+.progress-bar {
+  width: 100%;
+  height: 8px;
+  background: rgba(184,169,154,0.18);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #F8D7DA, #F0B8BF, #B8A99A);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+.progress-fill.full {
+  background: linear-gradient(90deg, #F0B8BF, #B8A99A);
+}
+
+/* ─── Floral divider ─────────────────────────────── */
+.divider-floral {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--taupe);
+}
+.divider-floral::before,
+.divider-floral::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--taupe), transparent);
+}
+
+/* ─── Upload drop zone ───────────────────────────── */
+.upload-zone {
+  border: 2px dashed rgba(184,169,154,0.38);
+  border-radius: 1.5rem;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  background: rgba(255,255,255,0.50);
+  cursor: pointer;
+}
+.upload-zone:hover,
+.upload-zone.drag-over {
+  border-color: var(--blush-deep);
+  background: rgba(248,215,218,0.10);
+}
+
+/* ─── Masonry grid ───────────────────────────────── */
+.masonry-grid { columns: 1; column-gap: 1rem; }
+@media (min-width: 540px)  { .masonry-grid { columns: 2; } }
+@media (min-width: 900px)  { .masonry-grid { columns: 3; } }
+@media (min-width: 1200px) { .masonry-grid { columns: 4; } }
+.masonry-item { break-inside: avoid; margin-bottom: 1rem; }
+
+/* ─── Photo card ─────────────────────────────────── */
+.photo-card {
+  position: relative;
+  border-radius: 1rem;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(184,169,154,0.16);
+}
+.photo-card img {
+  width: 100%;
+  display: block;
+  transition: transform 0.45s ease;
+}
+.photo-card:hover img { transform: scale(1.04); }
+
+.photo-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(45,30,30,0.72) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  display: flex;
+  align-items: flex-end;
+  padding: 0.875rem;
+}
+.photo-card:hover .photo-card-overlay { opacity: 1; }
+
+/* ─── Skeleton shimmer ───────────────────────────── */
+.skeleton {
+  background: linear-gradient(90deg, #f0ebe8 25%, #e8e1de 50%, #f0ebe8 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 0.75rem;
+}
+@keyframes shimmer {
+  0%   { background-position:  200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─── Modal backdrop ─────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(45,30,30,0.48);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+/* ─── Scrollbar ──────────────────────────────────── */
+::-webkit-scrollbar         { width: 6px; }
+::-webkit-scrollbar-track   { background: var(--warm-white); }
+::-webkit-scrollbar-thumb   { background: var(--silver); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--taupe); }
+
+/* ─── Lightbox override ──────────────────────────── */
+.yarl__root { --yarl__color_backdrop: rgba(28,18,18,0.93); }
+
+/* ─── Mobile tweaks ──────────────────────────────── */
+@media (max-width: 480px) {
+  .btn-primary, .btn-secondary { padding: 0.75rem 1.4rem; font-size: 0.78rem; }
+  .card { border-radius: 1.25rem; }
 }
