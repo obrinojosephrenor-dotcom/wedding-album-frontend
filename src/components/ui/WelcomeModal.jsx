@@ -144,26 +144,6 @@ export default function WelcomeModal({ isOpen, onClose }) {
                 />
               </div>
 
-              <div>
-                <label
-                  style={{
-                    display: 'block',
-                    marginBottom: '6px',
-                    color: '#6B5757'
-                  }}
-                >
-                  Mobile Number (optional)
-                </label>
-
-                <input
-                  type="tel"
-                  className="input-wedding"
-                  placeholder="+63 912 345 6789"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                />
-              </div>
-
               <button
                 type="submit"
                 className="btn-primary"
