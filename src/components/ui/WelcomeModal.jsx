@@ -7,7 +7,6 @@ import FlowerIcon from './FlowerIcon'
 
 export default function WelcomeModal({ isOpen, onClose }) {
   const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
   const [loading, setLoading] = useState(false)
 
   const { registerGuest } = useGuest()
@@ -24,20 +23,16 @@ export default function WelcomeModal({ isOpen, onClose }) {
     setLoading(true)
 
     try {
-      await registerGuest(name.trim(), phone.trim())
+      await registerGuest(name.trim())
 
       toast.success(`Welcome, ${name.trim()}! 🌸`)
 
       onClose()
-
       navigate('/album')
     } catch (err) {
-      toast.error(
-        err?.response?.data?.error ||
-        'Something went wrong. Try again.'
-      )
-    } finally {
-      setLoading(false)
+      console.error('REGISTER GUEST ERROR:', err)
+
+      toast.error(err?.message || 'Something went wrong. Try again.')
     }
   }
 
@@ -74,12 +69,7 @@ export default function WelcomeModal({ isOpen, onClose }) {
               <FlowerIcon size={60} />
             </div>
 
-            <div
-              style={{
-                textAlign: 'center',
-                marginBottom: '24px'
-              }}
-            >
+            <div style={{ textAlign: 'center', marginBottom: '24px' }}>
               <p
                 style={{
                   fontFamily: 'Dancing Script',
@@ -91,27 +81,14 @@ export default function WelcomeModal({ isOpen, onClose }) {
                 Welcome to
               </p>
 
-              <h2
-                style={{
-                  color: '#3D2E2E',
-                  lineHeight: 1.4,
-                  marginTop: '8px'
-                }}
-              >
+              <h2 style={{ color: '#3D2E2E', lineHeight: 1.4, marginTop: '8px' }}>
                 Nikki & Michael's
                 <br />
                 Shared Album
               </h2>
 
-              <p
-                style={{
-                  color: '#9A8A8A',
-                  fontSize: '14px',
-                  lineHeight: 1.6
-                }}
-              >
-                Tell us who you are so we can keep
-                track of your beautiful uploads.
+              <p style={{ color: '#9A8A8A', fontSize: '14px', lineHeight: 1.6 }}>
+                Tell us who you are so we can keep track of your beautiful uploads.
               </p>
             </div>
 
@@ -144,14 +121,8 @@ export default function WelcomeModal({ isOpen, onClose }) {
                 />
               </div>
 
-              <button
-                type="submit"
-                className="btn-primary"
-                disabled={loading}
-              >
-                {loading
-                  ? 'Entering...'
-                  : 'Enter Album ✿'}
+              <button type="submit" className="btn-primary" disabled={loading}>
+                {loading ? 'Entering...' : 'Enter Album ✿'}
               </button>
             </form>
           </motion.div>

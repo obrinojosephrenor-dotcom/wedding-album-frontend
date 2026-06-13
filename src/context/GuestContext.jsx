@@ -1,69 +1,76 @@
-import { createContext, useContext, useState, useEffect } from 'react'
-import { guestService } from '../services/api'
+import { createContext, useContext, useState } from 'react'
+import { supabase } from '../lib/supabase'
 
-const GuestContext = createContext(null)
+const GuestContext = createContext()
 
-export function GuestProvider({ children }) {
-  const [guest,   setGuest]   = useState(null)
-  const [loading, setLoading] = useState(true)
+export const GuestProvider = ({ children }) => {
+  const [loading, setLoading] = useState(false)
 
-  /* ── Rehydrate from localStorage on mount ── */
-  useEffect(() => {
-    const raw = localStorage.getItem('nm_guest')
-    if (!raw) { setLoading(false); return }
+  const registerGuest = async (name) => {
+    const trimmedName = name.trim()
 
-    let parsed
-    try { parsed = JSON.parse(raw) } catch { setLoading(false); return }
+    if (!trimmedName) {
+      throw new Error('Name is required')
+    }
 
-    /* Refresh upload_count from server so it's always accurate */
-    guestService.getGuest(parsed.id)
-      .then(({ data }) => {
-        const fresh = { ...parsed, upload_count: data.upload_count }
-        setGuest(fresh)
-        localStorage.setItem('nm_guest', JSON.stringify(fresh))
-      })
-      .catch(() => setGuest(parsed))   /* use cached if offline */
-      .finally(() => setLoading(false))
-  }, [])
+    setLoading(true)
 
-  /* ── Register new guest ── */
-  const registerGuest = async (name, phone) => {
-    const { data } = await guestService.createGuest({ name, phone })
-    localStorage.setItem('nm_guest', JSON.stringify(data))
-    setGuest(data)
-    return data
-  }
-
-  /* ── Optimistic increment after upload ── */
-  const incrementUpload = () => {
-    if (!guest) return
-    const updated = { ...guest, upload_count: guest.upload_count + 1 }
-    setGuest(updated)
-    localStorage.setItem('nm_guest', JSON.stringify(updated))
-  }
-
-  /* ── Sync from server ── */
-  const refreshGuest = async () => {
-    if (!guest) return
     try {
-      const { data } = await guestService.getGuest(guest.id)
-      const updated = { ...guest, upload_count: data.upload_count }
-      setGuest(updated)
-      localStorage.setItem('nm_guest', JSON.stringify(updated))
+      // 1. Check if guest already exists (safe version)
+      const { data: existing, error: fetchError } = await supabase
+        .from('guests')
+        .select('*')
+        .eq('name', trimmedName)
+        .maybeSingle()
+
+      if (fetchError) throw fetchError
+
+      if (existing) {
+        return existing
+      }
+
+      // 2. Insert new guest
+      const { data, error } = await supabase
+        .from('guests')
+        .insert([
+          {
+            name: trimmedName,
+            created_at: new Date().toISOString(),
+          },
+        ])
+        .select()
+        .maybeSingle()
+
+      // 3. Handle duplicate insert (race condition safety)
+      if (error) {
+        // Postgres unique violation
+        if (error.code === '23505') {
+          const { data: fallback } = await supabase
+            .from('guests')
+            .select('*')
+            .eq('name', trimmedName)
+            .maybeSingle()
+
+          return fallback
+        }
+
+        throw error
+      }
+
+      return data
     } catch (err) {
-      console.warn('refreshGuest failed:', err.message)
+      console.error('registerGuest error:', err.message)
+      throw err
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
-    <GuestContext.Provider value={{ guest, loading, registerGuest, incrementUpload, refreshGuest }}>
+    <GuestContext.Provider value={{ registerGuest, loading }}>
       {children}
     </GuestContext.Provider>
   )
 }
 
-export const useGuest = () => {
-  const ctx = useContext(GuestContext)
-  if (!ctx) throw new Error('useGuest must be inside <GuestProvider>')
-  return ctx
-}
+export const useGuest = () => useContext(GuestContext)
