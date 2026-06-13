@@ -4,19 +4,17 @@ import { supabase } from '../lib/supabase'
 const GuestContext = createContext()
 
 export const GuestProvider = ({ children }) => {
+  const [guest, setGuest] = useState(null)
   const [loading, setLoading] = useState(false)
 
   const registerGuest = async (name) => {
     const trimmedName = name.trim()
 
-    if (!trimmedName) {
-      throw new Error('Name is required')
-    }
+    if (!trimmedName) throw new Error('Name is required')
 
     setLoading(true)
 
     try {
-      // 1. Check if guest already exists (safe version)
       const { data: existing, error: fetchError } = await supabase
         .from('guests')
         .select('*')
@@ -25,49 +23,51 @@ export const GuestProvider = ({ children }) => {
 
       if (fetchError) throw fetchError
 
-      if (existing) {
-        return existing
+      let finalGuest = existing
+
+      if (!existing) {
+        const { data, error } = await supabase
+          .from('guests')
+          .insert([
+            {
+              name: trimmedName,
+              created_at: new Date().toISOString(),
+            },
+          ])
+          .select()
+          .single()
+
+        if (error) throw error
+        finalGuest = data
       }
 
-      // 2. Insert new guest
-      const { data, error } = await supabase
-        .from('guests')
-        .insert([
-          {
-            name: trimmedName,
-            created_at: new Date().toISOString(),
-          },
-        ])
-        .select()
-        .maybeSingle()
+      // 🔥 THIS IS THE IMPORTANT PART
+      setGuest(finalGuest)
 
-      // 3. Handle duplicate insert (race condition safety)
-      if (error) {
-        // Postgres unique violation
-        if (error.code === '23505') {
-          const { data: fallback } = await supabase
-            .from('guests')
-            .select('*')
-            .eq('name', trimmedName)
-            .maybeSingle()
+      // optional: persist session
+      localStorage.setItem('guest', JSON.stringify(finalGuest))
 
-          return fallback
-        }
-
-        throw error
-      }
-
-      return data
-    } catch (err) {
-      console.error('registerGuest error:', err.message)
-      throw err
+      return finalGuest
     } finally {
       setLoading(false)
     }
   }
 
+  const logoutGuest = () => {
+    setGuest(null)
+    localStorage.removeItem('guest')
+  }
+
   return (
-    <GuestContext.Provider value={{ registerGuest, loading }}>
+    <GuestContext.Provider
+      value={{
+        guest,
+        setGuest,
+        registerGuest,
+        logoutGuest,
+        loading,
+      }}
+    >
       {children}
     </GuestContext.Provider>
   )
