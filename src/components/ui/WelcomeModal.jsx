@@ -39,11 +39,13 @@ export default function WelcomeModal({ isOpen, onClose }) {
           onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
         >
           <motion.div
-            className="card w-full max-w-md p-8 relative overflow-hidden"
-            initial={{ opacity: 0, scale: 0.88, y: 24 }}
-            animate={{ opacity: 1, scale: 1,    y: 0  }}
-            exit={{   opacity: 0, scale: 0.88, y: 24  }}
-            transition={{ type: 'spring', stiffness: 280, damping: 24 }}
+              className="card w-full max-w-md relative"
+              style={{
+                maxHeight: '90vh',
+                overflowY: 'auto',
+                padding: '1.5rem',
+                margin: '1rem'
+              }}
           >
             {/* Corner flowers */}
             <div className="absolute -top-7 -right-7 opacity-60 pointer-events-none">
