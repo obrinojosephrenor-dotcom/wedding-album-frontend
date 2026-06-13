@@ -26,65 +26,60 @@ export default function DashboardPage() {
         <div style={{
           position: 'absolute', inset: 0, pointerEvents: 'none',
           background: `
-            radial-gradient(ellipse at 0% 50%,   rgba(248,215,218,0.38) 0%, transparent 52%),
-            radial-gradient(ellipse at 100% 50%,  rgba(167,191,215,0.28) 0%, transparent 52%)
+            radial-gradient(ellipse at 0% 50%,  rgba(248,215,218,0.38) 0%, transparent 52%),
+            radial-gradient(ellipse at 100% 50%, rgba(167,191,215,0.28) 0%, transparent 52%)
           `
         }} />
-        <div style={{ position: 'absolute', top: 0, left: 0, transform: 'translate(-28%,-28%)', opacity: 0.28, pointerEvents: 'none' }}>
-          <FlowerIcon size={130} color="#F8D7DA" />
+        <div style={{ position: 'absolute', top: 0, left: 0, transform: 'translate(-30%,-30%)', opacity: 0.26, pointerEvents: 'none' }}>
+          <FlowerIcon size={140} color="#F8D7DA" />
         </div>
-        <div style={{ position: 'absolute', top: 0, right: 0, transform: 'translate(28%,-28%)', opacity: 0.22, pointerEvents: 'none' }}>
-          <FlowerIcon size={110} color="#A8B5A2" />
+        <div style={{ position: 'absolute', top: 0, right: 0, transform: 'translate(30%,-30%)', opacity: 0.2, pointerEvents: 'none' }}>
+          <FlowerIcon size={120} color="#A8B5A2" />
         </div>
 
-        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '3.5rem 1.5rem 2.5rem' }}>
+        <div style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '3rem 1.5rem 2.25rem' }}>
           <motion.p
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.1 }}
-            style={{ fontFamily: 'Lato, sans-serif', fontSize: '0.68rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#B8A99A', marginBottom: '0.5rem' }}
+            style={{ fontFamily: "'Lato', sans-serif", fontSize: '0.68rem', letterSpacing: '0.3em', textTransform: 'uppercase', color: '#B8A99A', marginBottom: '0.5rem' }}
           >
             Shared Wedding Album
           </motion.p>
-
           <motion.h1
             initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            style={{ fontFamily: '"Dancing Script", cursive', fontSize: 'clamp(2.8rem, 8vw, 4.5rem)', color: '#3D2E2E', margin: '0 0 0.75rem' }}
+            style={{ fontFamily: "'Dancing Script', cursive", fontSize: 'clamp(2.4rem, 8vw, 4.5rem)', color: '#3D2E2E', margin: '0 0 0.75rem' }}
           >
             Nikki &amp; Michael
           </motion.h1>
-
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }}>
-            <div className="divider-floral" style={{ maxWidth: '200px', margin: '0 auto' }}>
-              <span style={{ fontSize: '1rem' }}>✿</span>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.32 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', maxWidth: '160px', margin: '0 auto' }}>
+              <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, transparent, #B8A99A, transparent)' }} />
+              <span style={{ color: '#B8A99A', fontSize: '1rem' }}>✿</span>
+              <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, transparent, #B8A99A, transparent)' }} />
             </div>
           </motion.div>
         </div>
       </header>
 
-      {/* ── Main content ── */}
+      {/* ── Main ── */}
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 1rem 5rem' }}>
 
-        {/* Welcome + counter cards */}
+        {/* Welcome + counter */}
         {guest && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem', marginBottom: '1.5rem' }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1rem', marginBottom: '1.25rem' }}
           >
-            {/* Welcome card */}
             <div className="card" style={{ padding: '1.5rem' }}>
-              <p style={{ fontFamily: 'Lato, sans-serif', fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#9A8A8A', marginBottom: '0.25rem' }}>
+              <p style={{ fontFamily: "'Lato', sans-serif", fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '0.12em', color: '#9A8A8A', marginBottom: '0.3rem' }}>
                 Welcome back
               </p>
-              <h2 style={{ fontFamily: '"Playfair Display", serif', fontSize: '1.55rem', fontWeight: 600, color: '#3D2E2E', margin: '0 0 0.75rem' }}>
+              <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.5rem', fontWeight: 600, color: '#3D2E2E', marginBottom: '0.75rem' }}>
                 Hello, {firstName}! 🌸
               </h2>
-              <p style={{ fontFamily: 'Lato, sans-serif', fontSize: '0.875rem', color: '#6B5757', lineHeight: 1.6, margin: 0 }}>
+              <p style={{ fontFamily: "'Lato', sans-serif", fontSize: '0.875rem', color: '#6B5757', lineHeight: 1.65 }}>
                 We're so glad you're here. Share your favorite moments from Nikki &amp; Michael's special day.
               </p>
             </div>
-
-            {/* Upload counter */}
             <UploadCounter count={guest.upload_count} />
           </motion.div>
         )}
@@ -92,16 +87,14 @@ export default function DashboardPage() {
         {/* Upload section */}
         {guest && (
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.45 }}
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.44 }}
             className="card"
             style={{ padding: '1.75rem', marginBottom: '2.5rem' }}
           >
-            <h3 style={{ fontFamily: '"Playfair Display", serif', fontSize: '1.3rem', color: '#3D2E2E', margin: '0 0 0.4rem' }}>
+            <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: '1.3rem', color: '#3D2E2E', marginBottom: '0.4rem' }}>
               Share a Photo
             </h3>
-            <p style={{ fontFamily: 'Lato, sans-serif', fontSize: '0.875rem', color: '#9A8A8A', margin: '0 0 1.5rem' }}>
+            <p style={{ fontFamily: "'Lato', sans-serif", fontSize: '0.875rem', color: '#9A8A8A', marginBottom: '1.5rem' }}>
               Take a new photo or upload one from your gallery.
             </p>
             <PhotoUpload onUploadSuccess={() => setRefreshTrigger(t => t + 1)} />
@@ -109,22 +102,20 @@ export default function DashboardPage() {
         )}
 
         {/* Gallery */}
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.6 }}>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.58 }}>
           <Gallery refreshTrigger={refreshTrigger} />
         </motion.div>
       </main>
 
       {/* ── Footer ── */}
-      <footer style={{ textAlign: 'center', padding: '1rem 0 2.5rem' }}>
-        <div className="divider-floral" style={{ maxWidth: '200px', margin: '0 auto 1rem' }}>
-          <span style={{ opacity: 0.35, fontSize: '0.9rem' }}>✿</span>
+      <footer style={{ textAlign: 'center', padding: '1rem 0 3rem' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', maxWidth: '200px', margin: '0 auto 1rem' }}>
+          <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, transparent, #B8A99A, transparent)', opacity: 0.4 }} />
+          <span style={{ color: '#B8A99A', opacity: 0.4 }}>✿</span>
+          <div style={{ flex: 1, height: '1px', background: 'linear-gradient(90deg, transparent, #B8A99A, transparent)', opacity: 0.4 }} />
         </div>
-        <p style={{ fontFamily: '"Dancing Script", cursive', fontSize: '1.6rem', color: '#B8A99A', margin: '0 0 0.25rem' }}>
-          With love ♡
-        </p>
-        <p style={{ fontFamily: 'Lato, sans-serif', fontSize: '0.78rem', color: '#9A8A8A', margin: 0 }}>
-          Nikki &amp; Michael
-        </p>
+        <p style={{ fontFamily: "'Dancing Script', cursive", fontSize: '1.6rem', color: '#B8A99A', marginBottom: '0.25rem' }}>With love ♡</p>
+        <p style={{ fontFamily: "'Lato', sans-serif", fontSize: '0.78rem', color: '#9A8A8A' }}>Nikki &amp; Michael</p>
       </footer>
 
       <WelcomeModal isOpen={showModal} onClose={() => setShowModal(false)} />
