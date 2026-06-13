@@ -505,3 +505,20 @@ body {
   background: transparent;
   color: #6B5757;
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600&family=Playfair+Display:wght@400;500;600&family=Lato:wght@300;400;700&display=swap');
+
+body {
+  font-family: 'Lato', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #3D2E2E;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+.wedding-title {
+  font-family: 'Dancing Script', cursive;
+}
