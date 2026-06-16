@@ -64,7 +64,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           style={{
-            fontFamily: "'Dancing Script', cursive",
+            fontFamily: "Grace Taylor",
             fontSize: 'clamp(3rem, 8vw, 5rem)',
             color: '#3D2E2E',
             margin: '0.5rem 0'
