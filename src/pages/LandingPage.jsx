@@ -110,7 +110,7 @@ export default function LandingPage() {
           <span
             style={{
               display: 'block',
-              fontFamily: '"Grace Taylor", cursive',
+              fontFamily: 'Grace Taylor',
               fontSize: 'clamp(4rem, 12vw, 6.5rem)',
               color: '#3D2E2E',
               lineHeight: 1.05,
