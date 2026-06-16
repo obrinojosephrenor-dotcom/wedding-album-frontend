@@ -522,3 +522,8 @@ h1, h2, h3 {
 .wedding-title {
   font-family: 'Dancing Script', cursive;
 }
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
