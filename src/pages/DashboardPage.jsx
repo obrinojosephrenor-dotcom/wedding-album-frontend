@@ -129,7 +129,7 @@ export default function DashboardPage() {
               </p>
 
               <h2 style={{
-                fontFamily: "'Playfair Display', serif",
+                fontFamily: "'Lato', Bold",
                 fontSize: '1.6rem',
                 color: '#3D2E2E',
                 marginTop: '0.3rem'
